@@ -27,6 +27,10 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 	Font subtitlefont;
 	
 	Font subsubtitlefont;
+	
+	PacMan pacman=new PacMan(300,300, 100, 100);
+	
+	
 
 
 public GamePanel () {
@@ -136,7 +140,12 @@ public void mouseExited(MouseEvent e) {
 @Override
 public void mouseDragged(MouseEvent e) {
 	// TODO Auto-generated method stub
-	System.out.println("Hiiiiiiiii");
+	System.out.println("UNICORNS");
+	System.out.println(e.getX());
+	System.out.println(e.getY());
+	pacman.x=e.getX();
+	pacman.y=e.getY();
+	
 }
 @Override
 public void mouseMoved(MouseEvent e) {
@@ -144,9 +153,9 @@ public void mouseMoved(MouseEvent e) {
 	System.out.println("Hiiiiiiiiii");
 }
 	
-
+ 
 void updateMenuState() {
-	
+	pacman.update();
 }
 void updateGameState() {
 	
@@ -172,6 +181,7 @@ void drawMenuState(Graphics g) {
 void drawGameState(Graphics g) {
 	g.setColor(Color.PINK);
 	g.fillRect(0, 0, Modern.width, Modern.height);
+	pacman.draw(g);
 }
 void drawEndState(Graphics g) {
 	g.setColor(Color.GREEN);
