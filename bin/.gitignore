@@ -1,5 +1,6 @@
 /GameObject.class
 /GamePanel.class
 /Modern.class
-/PacMan.class
 /ObjectManager.class
+/PacMan.class
+/Gold.class

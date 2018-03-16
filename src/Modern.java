@@ -4,8 +4,8 @@ import javax.swing.JFrame;
 
 public class Modern {
 	JFrame frame;
-	final static int width=500;
-	final static int height=800;
+	final static int width=1000;
+	final static int height=1000;
 	GamePanel gamepanel=new GamePanel();
 	
 	public Modern(){

@@ -8,6 +8,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.util.ArrayList;
 
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -28,7 +29,12 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 	
 	Font subsubtitlefont;
 	
-	PacMan pacman=new PacMan(300,300, 100, 100);
+	PacMan pacman=new PacMan(300,300, 50, 50);
+	
+	ObjectManager objectmanager=new ObjectManager(pacman);
+	
+	ArrayList<Gold> goldz= new ArrayList<Gold>();
+	
 	
 	
 
@@ -36,6 +42,12 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 public GamePanel () {
 	timer=new Timer(1000  /60, this);
 	titlefont=new Font("Arial",titlefont.PLAIN,40);
+	goldz.add(new Gold(100,100,20,20));
+	
+	
+	
+	
+	
 	
 }
 @Override
@@ -158,6 +170,7 @@ void updateMenuState() {
 	pacman.update();
 }
 void updateGameState() {
+	objectmanager.update();
 	
 }
 void updateEndState() {
@@ -181,7 +194,12 @@ void drawMenuState(Graphics g) {
 void drawGameState(Graphics g) {
 	g.setColor(Color.PINK);
 	g.fillRect(0, 0, Modern.width, Modern.height);
-	pacman.draw(g);
+	objectmanager.draw(g);
+	for (int i = 0; i < goldz.size(); i++) {
+		Gold s = goldz.get(i);
+	}
+	
+	
 }
 void drawEndState(Graphics g) {
 	g.setColor(Color.GREEN);
