@@ -180,6 +180,10 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 
 	void updateGameState() {
 		objectmanager.update();
+		for (int i = 0; i <block.size() ; i++) {
+			ObstacleBlocks ob=block.get(i);
+			ob.update();
+		}
 
 	}
 
