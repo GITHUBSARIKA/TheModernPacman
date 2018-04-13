@@ -8,7 +8,7 @@ public PacMan(int x, int y, int width, int height) {
 	speed=5;
 }
 void update() {
-	
+	super.update();
 }
 void draw(Graphics g) {
 	g.setColor(new Color(204, 51, 153));

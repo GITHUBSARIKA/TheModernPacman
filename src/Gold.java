@@ -7,7 +7,7 @@ public class Gold extends GameObject {
 	}
 
 	void update() {
-
+      super.update();
 	}
 
 	void draw(Graphics g) {

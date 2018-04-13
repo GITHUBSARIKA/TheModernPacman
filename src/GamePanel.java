@@ -47,7 +47,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 			goldz.add(new Gold(x, y, 20, 20));
 
 		}
-		for (int j = 0; j < 30; j++) {
+		for (int j = 0; j < 6; j++) {
 			Random random2 = new Random();
 			int X = random2.nextInt(Modern.width);
 			int Y = random2.nextInt(Modern.height);
@@ -180,6 +180,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 
 	void updateGameState() {
 		objectmanager.update();
+		checkCollision();
 		for (int i = 0; i <block.size() ; i++) {
 			ObstacleBlocks ob=block.get(i);
 			ob.update();
@@ -237,4 +238,48 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 		g.drawString("Press enter to play again", 10, 500);
 
 	}
+	void checkCollision() {
+
+
+for(Gold a : goldz){
+
+        if(pacman.collisionBox.intersects(a.collisionBox)){
+
+           a.isAlive= false;
+
+       } 
+      }  
+        for(ObstacleBlocks b : block){
+
+            if(pacman.collisionBox.intersects(b.collisionBox)){
+
+               pacman.isAlive= false;
+
+            }
+            System.out.println("dragons");
 }
+
+	
+}
+void purgeObject() {
+	for (int i = 0; i < goldz.size(); i++) {
+		if(pacman.collisionBox.intersects(goldz.get(i).collisionBox)){
+
+            goldz.remove(i);
+
+         }
+	}
+	
+}}
+
+
+
+
+
+
+
+
+
+
+
+

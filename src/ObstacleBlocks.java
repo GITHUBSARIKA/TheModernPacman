@@ -10,6 +10,7 @@ public class ObstacleBlocks extends GameObject {
 	}
 
 	void update() {
+		super.update();
        x+=speed;
       if (x>Modern.width) {
 		speed=-10;
