@@ -1,3 +1,4 @@
+/.DS_Store
 /GameObject.class
 /GamePanel.class
 /Gold.class
@@ -5,4 +6,3 @@
 /ObjectManager.class
 /ObstacleBlocks.class
 /PacMan.class
-/.DS_Store

@@ -33,13 +33,20 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 	PacMan pacman = new PacMan(300, 300, 50, 50);
 
 	ObjectManager objectmanager = new ObjectManager(pacman);
-
+	
+	
 	ArrayList<Gold> goldz = new ArrayList<Gold>();
 	ArrayList<ObstacleBlocks> block = new ArrayList<ObstacleBlocks>();
 
 	public GamePanel() {
 		timer = new Timer(1000 / 60, this);
 		titlefont = new Font("Arial", titlefont.PLAIN, 40);
+		initializeGame();
+	}
+
+	void initializeGame(){
+		goldz= new ArrayList<Gold>();
+		block=new ArrayList<ObstacleBlocks>();
 		for (int i = 0; i < 60; i++) {
 			Random random = new Random();
 			int x = random.nextInt(Modern.width);
@@ -47,7 +54,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 			goldz.add(new Gold(x, y, 20, 20));
 
 		}
-		for (int j = 0; j < 6; j++) {
+		for (int j = 0; j < 1; j++) {
 			Random random2 = new Random();
 			int X = random2.nextInt(Modern.width);
 			int Y = random2.nextInt(Modern.height);
@@ -55,7 +62,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 
 		}
 	}
-
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
@@ -102,18 +109,20 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
-		System.out.println("Hi");
+	
 	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
-		System.out.println("Hii");
+		
 		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 			currentState++;
 			if (currentState > END_STATE) {
 
 				currentState = MENU_STATE;
+				  pacman= new PacMan( 300,  300,  50,  50);
+				  initializeGame();
 
 			}
 
@@ -124,45 +133,44 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
-		System.out.println("Hiii");
+		
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
-		System.out.println("Hiiii");
+		
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
-		System.out.println("Hiiiii");
+		
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
-		System.out.println("Hiiiiii");
+		
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		// TODO Auto-generated method stub
-		System.out.println("Hiiiiiii");
+		
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
-		System.out.println("Hiiiiiiii");
+		
 	}
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
 		// TODO Auto-generated method stub
-		System.out.println("UNICORNS");
-		System.out.println(e.getX());
-		System.out.println(e.getY());
+		
+	
 		pacman.x = e.getX();
 		pacman.y = e.getY();
 
@@ -171,20 +179,24 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 	@Override
 	public void mouseMoved(MouseEvent e) {
 		// TODO Auto-generated method stub
-		System.out.println("Hiiiiiiiiii");
+		
 	}
 
 	void updateMenuState() {
-		pacman.update();
+		
 	}
 
 	void updateGameState() {
-		objectmanager.update();
-		checkCollision();
-		for (int i = 0; i <block.size() ; i++) {
-			ObstacleBlocks ob=block.get(i);
+		pacman.update();
+	
+
+		for (int i = 0; i < block.size(); i++) {
+			ObstacleBlocks ob = block.get(i);
 			ob.update();
-		}
+		}	
+		checkCollision();
+
+		purgeObject();
 
 	}
 
@@ -210,7 +222,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 	void drawGameState(Graphics g) {
 		g.setColor(Color.PINK);
 		g.fillRect(0, 0, Modern.width, Modern.height);
-		objectmanager.draw(g);
+		pacman.draw(g);
 		System.out.println(goldz.size());
 		for (int i = 0; i < goldz.size(); i++) {
 			Gold s = goldz.get(i);
@@ -232,54 +244,72 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 		g.drawString("You suck at this game", 40, 100);
 		g.setColor(Color.BLACK);
 		g.setFont(subtitlefont);
-		g.drawString("You lose", 40, 300);
+		//g.drawString("You lose", 40, 300);
 		g.setColor(Color.BLACK);
 		g.setFont(subsubtitlefont);
 		g.drawString("Press enter to play again", 10, 500);
+		if (goldz.isEmpty()) {
+			g.drawString("You win", 40, 300);
+		}
+		for (int j = 0; j < block.size(); j++) {
+			if (pacman.collisionBox.intersects(block.get(j).collisionBox)) {
+
+				currentState = END_STATE;
+				g.drawString("You lose", 40, 300);
+
+			}
+		}
+		
+		
 
 	}
+
 	void checkCollision() {
 
+		for (Gold a : goldz) {
 
-for(Gold a : goldz){
+			if (pacman.collisionBox.intersects(a.collisionBox)) {
 
-        if(pacman.collisionBox.intersects(a.collisionBox)){
+				a.isAlive = false;
 
-           a.isAlive= false;
+			}
+		}
+		for (ObstacleBlocks b : block) {
 
-       } 
-      }  
-        for(ObstacleBlocks b : block){
+			if (pacman.collisionBox.intersects(b.collisionBox)) {
 
-            if(pacman.collisionBox.intersects(b.collisionBox)){
+				pacman.isAlive = false;
 
-               pacman.isAlive= false;
+			}
+			
+		}
 
-            }
-            System.out.println("dragons");
-}
-
-	
-}
-void purgeObject() {
-	for (int i = 0; i < goldz.size(); i++) {
-		if(pacman.collisionBox.intersects(goldz.get(i).collisionBox)){
-
-            goldz.remove(i);
-
-         }
 	}
-	
-}}
 
+	void purgeObject() {
+		for (int i = 0; i < goldz.size(); i++) {
+			if (pacman.collisionBox.intersects(goldz.get(i).collisionBox)) {
 
+				goldz.remove(i);
 
+			}
+		}
+		for (int j = 0; j < block.size(); j++) {
+			if (pacman.collisionBox.intersects(block.get(j).collisionBox)) {
 
+				currentState = END_STATE;
 
+			}
+		}
+		System.out.println(goldz.size());
+			if (goldz.isEmpty()) {
 
+				currentState = END_STATE;
+				
+				
 
+			}
+		
 
-
-
-
-
+	}
+}

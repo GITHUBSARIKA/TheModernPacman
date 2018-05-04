@@ -13,8 +13,6 @@ void update() {
 void draw(Graphics g) {
 	g.setColor(new Color(204, 51, 153));
 	g.fillOval(x, y,width, height);
-	System.out.println("unicorns");
-	System.out.println(x);
-	System.out.println(y);
+	
 }
 }
