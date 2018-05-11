@@ -23,7 +23,8 @@ public class ObstacleBlocks extends GameObject {
 	}
 
 	void draw(Graphics g) {
-		g.setColor(Color.BLACK);
-		g.drawRect(x, y, width, height);
+		 g.drawImage(GamePanel.rainbowblockImg, x, y, width, height, null);
+
+
 	}
 }

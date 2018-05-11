@@ -6,13 +6,13 @@ public class Gold extends GameObject {
 		super(x, y, width, height);
 	}
 
+	
 	void update() {
       super.update();
 	}
 
 	void draw(Graphics g) {
-		g.setColor(Color.YELLOW);
-		g.drawRect(x, y, width, height);
+		 g.drawImage(GamePanel.golddImg, x, y, width, height, null);
 
 	}
 }

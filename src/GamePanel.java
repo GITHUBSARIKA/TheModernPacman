@@ -8,9 +8,12 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -34,6 +37,14 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 
 	ObjectManager objectmanager = new ObjectManager(pacman);
 	
+	public static BufferedImage rainbowblockImg;
+	
+	public static BufferedImage pacman222Img;
+	
+	public static BufferedImage golddImg;
+	
+	public static BufferedImage smudgeartImg;
+	
 	
 	ArrayList<Gold> goldz = new ArrayList<Gold>();
 	ArrayList<ObstacleBlocks> block = new ArrayList<ObstacleBlocks>();
@@ -42,6 +53,25 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 		timer = new Timer(1000 / 60, this);
 		titlefont = new Font("Arial", titlefont.PLAIN, 40);
 		initializeGame();
+		try {
+
+            rainbowblockImg = ImageIO.read(this.getClass().getResourceAsStream("rainbowblock.png"));
+
+            golddImg = ImageIO.read(this.getClass().getResourceAsStream(".png.png"));
+
+            pacman222Img = ImageIO.read(this.getClass().getResourceAsStream("pacman222.png"));
+            
+            smudgeartImg = ImageIO.read(this.getClass().getResourceAsStream("smudgeart.png"));
+
+           
+
+    } catch (IOException e) {
+
+            // TODO Auto-generated catch block
+
+            e.printStackTrace();
+
+    }
 	}
 
 	void initializeGame(){
@@ -220,8 +250,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 	}
 
 	void drawGameState(Graphics g) {
-		g.setColor(Color.PINK);
-		g.fillRect(0, 0, Modern.width, Modern.height);
+		 g.drawImage(GamePanel.smudgeartImg, 0, 0, Modern.width, Modern.height, null);
 		pacman.draw(g);
 		System.out.println(goldz.size());
 		for (int i = 0; i < goldz.size(); i++) {

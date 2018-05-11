@@ -11,8 +11,6 @@ void update() {
 	super.update();
 }
 void draw(Graphics g) {
-	g.setColor(new Color(204, 51, 153));
-	g.fillOval(x, y,width, height);
-	
+g.drawImage(GamePanel.pacman222Img, x, y, width, height, null);
 }
 }
