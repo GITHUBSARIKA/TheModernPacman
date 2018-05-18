@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -44,6 +45,10 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 	public static BufferedImage golddImg;
 	
 	public static BufferedImage smudgeartImg;
+	
+	int currentLevel=1;
+	
+	boolean impossible=true;
 	
 	
 	ArrayList<Gold> goldz = new ArrayList<Gold>();
@@ -77,14 +82,14 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 	void initializeGame(){
 		goldz= new ArrayList<Gold>();
 		block=new ArrayList<ObstacleBlocks>();
-		for (int i = 0; i < 60; i++) {
+		for (int i = 0; i < 30; i++) {
 			Random random = new Random();
 			int x = random.nextInt(Modern.width);
 			int y = random.nextInt(Modern.height);
 			goldz.add(new Gold(x, y, 20, 20));
 
 		}
-		for (int j = 0; j < 1; j++) {
+		for (int j = 0; j < currentLevel*4; j++) {
 			Random random2 = new Random();
 			int X = random2.nextInt(Modern.width);
 			int Y = random2.nextInt(Modern.height);
@@ -157,6 +162,12 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 			}
 
 		}
+		
+		if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+			JOptionPane.showMessageDialog(null, "Welcome to the game, Modern Pacman.\n The goal of this game is to get all the gold pieces that are yellow and orange and scattered around on the game screen.\n There are also obstacle blocks that are rainbow colors and get in your way because if you bump into them you lose.\n You can drag your mouse to get your pacman around.\n This game will also take you through a series of levels.\n Have Fun:) ");
+
+		}
+
 
 	}
 
@@ -262,7 +273,9 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 			ObstacleBlocks ob = block.get(j);
 			ob.draw(g);
 		}
-
+		
+		
+       
 	}
 
 	void drawEndState(Graphics g) {
@@ -270,7 +283,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 		g.fillRect(0, 0, Modern.width, Modern.height);
 		g.setColor(Color.BLACK);
 		g.setFont(titlefont);
-		g.drawString("You suck at this game", 40, 100);
+		//g.drawString("You suck at this game", 40, 100);
 		g.setColor(Color.BLACK);
 		g.setFont(subtitlefont);
 		//g.drawString("You lose", 40, 300);
@@ -287,6 +300,12 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 				g.drawString("You lose", 40, 300);
 
 			}
+		}
+		
+		if (pacman.isAlive) {
+			g.drawString("You are amazing at this game", 40, 100);
+		}else {
+			g.drawString("You suck at this game so you have to try again.", 40, 100);
 		}
 		
 		
