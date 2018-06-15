@@ -36,8 +36,6 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 
 	PacMan pacman = new PacMan(300, 300, 50, 50);
 
-	ObjectManager objectmanager = new ObjectManager(pacman);
-
 	public static BufferedImage rainbowblockImg;
 
 	public static BufferedImage pacman222Img;
@@ -49,8 +47,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 	int currentLevel = 1;
 
 	boolean nodying = true;
-	
-	long nodyingtimer=0;
+
+	long nodyingtimer = 0;
 
 	ArrayList<Gold> goldz = new ArrayList<Gold>();
 	ArrayList<ObstacleBlocks> block = new ArrayList<ObstacleBlocks>();
@@ -88,7 +86,47 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 			goldz.add(new Gold(x, y, 20, 20));
 
 		}
-		for (int j = 0; j < currentLevel * 3; j++) {
+		for (int j = 0; j < currentLevel * 4; j++) {
+			Random random2 = new Random();
+			int X = random2.nextInt(Modern.width);
+			int Y = random2.nextInt(Modern.height);
+			block.add(new ObstacleBlocks(X, Y, 20, 75));
+
+		}
+
+	}
+
+	void initializeleveltwo() {
+		goldz = new ArrayList<Gold>();
+		block = new ArrayList<ObstacleBlocks>();
+		for (int i = 0; i < 30; i++) {
+			Random random = new Random();
+			int x = random.nextInt(Modern.width);
+			int y = random.nextInt(Modern.height);
+			goldz.add(new Gold(x, y, 20, 20));
+
+		}
+		for (int j = 0; j < currentLevel * 8; j++) {
+			Random random2 = new Random();
+			int X = random2.nextInt(Modern.width);
+			int Y = random2.nextInt(Modern.height);
+			block.add(new ObstacleBlocks(X, Y, 20, 75));
+
+		}
+	}
+
+	void initializelevelthree() {
+		goldz = new ArrayList<Gold>();
+		block = new ArrayList<ObstacleBlocks>();
+		for (int i = 0; i < 30; i++) {
+			Random random = new Random();
+			int x = random.nextInt(Modern.width);
+			int y = random.nextInt(Modern.height);
+			goldz.add(new Gold(x, y, 20, 20));
+
+		}
+		for (int j = 0; j < currentLevel * 12
+				; j++) {
 			Random random2 = new Random();
 			int X = random2.nextInt(Modern.width);
 			int Y = random2.nextInt(Modern.height);
@@ -108,24 +146,23 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 		} else if (currentState == GAME_STATE) {
 
 			updateGameState();
-			
 
 		} else if (currentState == END_STATE) {
 
 			updateEndState();
 
 		}
-		if (System.currentTimeMillis()-nodyingtimer<5000) {
-			nodying=true;
-		}else {
-			nodying=false;
+		if (System.currentTimeMillis() - nodyingtimer < 5000) {
+			nodying = true;
+		} else {
+			nodying = false;
 		}
 
 	}
 
 	void startGame() {
 		timer.start();
-		nodyingtimer=System.currentTimeMillis();
+		nodyingtimer = System.currentTimeMillis();
 	}
 
 	@Override
@@ -164,7 +201,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 				currentState = MENU_STATE;
 				pacman = new PacMan(300, 300, 50, 50);
 				initializeGame();
-				nodyingtimer=System.currentTimeMillis();
+				nodyingtimer = System.currentTimeMillis();
 
 			}
 
@@ -172,7 +209,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 
 		if (e.getKeyCode() == KeyEvent.VK_SPACE) {
 			JOptionPane.showMessageDialog(null,
-					"Welcome to the game, Modern Pacman.\n The goal of this game is to get all the gold pieces that are yellow and orange and scattered around on the game screen.\n There are also obstacle blocks that are rainbow colors and get in your way because if you bump into them you lose.\n You can drag your mouse to get your pacman around.\n This game will also take you through a series of levels.\n The first five seconds of your will be your time to rest, nothing can kill you, but after that, the real game starts.\n Have Fun:) ");
+					"Welcome to the game, Modern Pacman.\n The goal of this game is to get all the gold pieces that are yellow and orange and scattered around on the game screen.\n There are also obstacle blocks that are rainbow colors and get in your way because if you bump into them you lose.\n You can drag your mouse to get your pacman around.\n This game will also take you through a series of 3 levels.\n The first five seconds of your will be your time to rest, nothing can kill you, but after that, the real game starts.\n Have Fun:) ");
 
 		}
 
@@ -251,7 +288,6 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 			if (pacman.collisionBox.intersects(block.get(j).collisionBox)) {
 
 				currentState = END_STATE;
-				
 
 			}
 		}
@@ -303,10 +339,10 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 		g.drawString("Press enter to play again", 10, 500);
 		if (goldz.isEmpty()) {
 			g.drawString("You win", 40, 300);
-		}else {
+		} else {
 			g.drawString("You Lose", 40, 300);
 		}
-		
+
 		if (pacman.isAlive) {
 			g.drawString("You are amazing at this game", 40, 100);
 		} else {
@@ -316,7 +352,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener, Mo
 	}
 
 	void checkCollision() {
-System.out.println(pacman.isAlive);
+		System.out.println(pacman.isAlive);
 		for (Gold a : goldz) {
 
 			if (pacman.collisionBox.intersects(a.collisionBox)) {
@@ -326,11 +362,11 @@ System.out.println(pacman.isAlive);
 			}
 		}
 		if (!nodying) {
-          System.out.println("what");
+			System.out.println("what");
 			for (ObstacleBlocks b : block) {
 
 				if (pacman.collisionBox.intersects(b.collisionBox)) {
-               
+
 					pacman.isAlive = false;
 
 				}
@@ -348,17 +384,31 @@ System.out.println(pacman.isAlive);
 
 			}
 		}
-		
-			if (!pacman.isAlive) {
 
-				currentState = END_STATE;
-
-			}
-		
-		System.out.println(goldz.size());
-		if (goldz.isEmpty()) {
+		if (!pacman.isAlive) {
 
 			currentState = END_STATE;
+
+		}
+
+		System.out.println(goldz.size());
+		if (goldz.isEmpty()) {
+			if (currentLevel == 1) {
+				initializeleveltwo();
+				currentLevel = 2;
+				nodyingtimer = System.currentTimeMillis();
+			}
+			else if (currentLevel == 2) {
+				initializelevelthree();
+				currentLevel = 3;
+				nodyingtimer = System.currentTimeMillis();
+			}
+			else if (currentLevel == 3) {
+				currentState = END_STATE;
+				currentLevel=1;
+				nodyingtimer = System.currentTimeMillis();
+			}
+			
 
 		}
 

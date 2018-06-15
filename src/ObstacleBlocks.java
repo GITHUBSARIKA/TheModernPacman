@@ -23,6 +23,7 @@ public class ObstacleBlocks extends GameObject {
 	}
 
 	void draw(Graphics g) {
+		//super.draw(g);
 		 g.drawImage(GamePanel.rainbowblockImg, x, y, width, height, null);
 
 

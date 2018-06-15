@@ -12,6 +12,7 @@ public class Gold extends GameObject {
 	}
 
 	void draw(Graphics g) {
+		//super.draw(g);
 		 g.drawImage(GamePanel.golddImg, x, y, width, height, null);
 
 	}

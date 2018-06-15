@@ -11,6 +11,7 @@ void update() {
 	super.update();
 }
 void draw(Graphics g) {
+	//super.draw(g);
 g.drawImage(GamePanel.pacman222Img, x, y, width, height, null);
 }
 }
